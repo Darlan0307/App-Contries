@@ -1,10 +1,12 @@
+import AppRouters from "./components/AppRouters"
+import { ThemeProvider } from "./context/ThemeProviderContext"
 
 function App() {
   return (
     <>
-
-        <h1>App Contries</h1>
-
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <AppRouters/> 
+      </ThemeProvider>
     </>
   )
 }
