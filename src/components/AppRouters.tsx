@@ -1,11 +1,12 @@
 import { BrowserRouter,Routes,Route} from 'react-router-dom'
+import AppHeader from './AppHeader'
 
 
 const AppRouters = () => {
   return (
     <BrowserRouter>
 
-      {/* Cabeçalho */}
+      <AppHeader/>
       
       <Routes>
 
