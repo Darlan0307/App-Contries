@@ -4,12 +4,15 @@ import SectionFilter from "@/components/SectionFilter"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Home = () => {
 
   const [dataCountries,setDataCountries] = useState<TypeContry[] | []>([])
   const [numberStart,setNumberStart] = useState(0)
   const [numberEnd,setNumberEnd] = useState(10)
+  const [filterName,setFilterName] = useState('')
+  const [filterRegion,setFilterRegion] = useState('')
 
   const navigate = useNavigate()
   
@@ -36,13 +39,39 @@ const Home = () => {
     }
   }
 
+  const fetchFilterData = async(typeFilter:"name" | "region",value:string) => {
+    try {
+      const response = await axios.get(`https://restcountries.com/v3.1/${typeFilter}/${value}`)
+      setDataCountries(response.data)
+      
+    } catch (error:any) {
+      toast.warn(error?.response?.data?.message)
+    }
+  }
+
   useEffect(()=>{
     fetchData()
   },[])
 
+  useEffect(()=>{
+
+    if(filterName){
+      fetchFilterData("name",filterName)
+    } else if(filterRegion){
+      fetchFilterData("region",filterRegion)
+    }
+
+    
+  },[filterName,filterRegion])
+
   return (
     <main>
-      <SectionFilter/>
+      <SectionFilter
+        filterName={filterName}
+        setFilterName={setFilterName}
+        filterRegion={filterRegion}
+        setFilterRegion={setFilterRegion}
+      />
       {dataCountries.length > 0 ? (
         <>
           <div className="mt-10 flex flex-wrap gap-10 items-center justify-center">
@@ -61,7 +90,7 @@ const Home = () => {
             ))}
           </div>
 
-          <ComponentPagination nextPage={nextPage} prevPage={prevPage} />
+          <ComponentPagination nextPage={nextPage} prevPage={prevPage} numberStart={numberStart}/>
         </>
       ):(
         <h2>carregando...</h2>
