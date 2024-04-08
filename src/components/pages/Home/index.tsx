@@ -1,4 +1,5 @@
 import { TypeContry } from "@/@Types/TypeCoutry";
+import ComponentPagination from "@/components/ComponentPagination";
 import SectionFilter from "@/components/SectionFilter"
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -15,6 +16,9 @@ const Home = () => {
   }
 
   const prevPage = () => {
+
+    if(numberStart == 0)return;
+
     setNumberStart((prev) => prev - 10)
     setNumberEnd((prev) => prev - 10)
   }
@@ -50,14 +54,7 @@ const Home = () => {
             ))}
           </div>
 
-          {/* <div>
-            <button
-            onClick={prevPage}
-            >prev</button>
-            <button
-            onClick={nextPage}
-            >next</button>
-          </div> */}
+          <ComponentPagination nextPage={nextPage} prevPage={prevPage} />
         </>
       ):(
         <h2>carregando...</h2>
