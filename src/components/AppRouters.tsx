@@ -1,5 +1,6 @@
 import { BrowserRouter,Routes,Route} from 'react-router-dom'
 import AppHeader from './AppHeader'
+import Home from './pages/Home'
 
 
 const AppRouters = () => {
@@ -10,7 +11,7 @@ const AppRouters = () => {
       
       <Routes>
 
-        <Route index element={<h1>Home</h1>}/>
+        <Route index element={<Home/>}/>
 
       </Routes>
 
